@@ -52,4 +52,4 @@ self.addEventListener("fetch", (event) => {
         return new Response(null, { status: 404 });
       })(),
     );
-  });
+}); 

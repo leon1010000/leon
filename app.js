@@ -71,3 +71,4 @@ function formatDate(dateString) {
 }
 
 renderPastPeriods();
+ 
