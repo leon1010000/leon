@@ -6,6 +6,7 @@ const APP_STATIC_RESOURCES = [
     "/style.css",
     "/app.js",
     "/icon.png",
+    "/mani.json"
 ];
 self.addEventListener("install", (event) => {
   console.log("installed");
