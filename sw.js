@@ -37,7 +37,7 @@ self.addEventListener("fetch", (event) => {
     // As a single page app, direct app to always go to cached home page.
     if (event.request.mode === "navigate") {
       console.log("responded /");
-      event.respondWith(caches.match("/"));
+      event.respondWith(caches.match("/")());
       return;
     }
   
@@ -54,6 +54,6 @@ self.addEventListener("fetch", (event) => {
         // If resource isn't in the cache, return a 404.
         console.log("responded 404");
         return new Response(null, { status: 404 });
-      })(),
+      })()
     );
 }); 
