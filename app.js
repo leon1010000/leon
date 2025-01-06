@@ -2,7 +2,8 @@ const newPeriodFormEl = document.getElementsByTagName("form")[0];
 const startDateInputEl = document.getElementById("start-date");
 const endDateInputEl = document.getElementById("end-date");
 const pastPeriodContainer = document.getElementById("past-periods");
-
+if(newPeriodFormEl&&startDateInputEl&&endDateInputEl&&pastPeriodContainer)console.log("app.js succeeded");
+else console.log("app.js failed");
 // Add the storage key as an app-wide constant
 const STORAGE_KEY = "period-tracker";
 
