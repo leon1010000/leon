@@ -40,8 +40,6 @@ function storeNewPeriod(startDate, endDate) {
 function getAllStoredPeriods() {
   const data = window.localStorage.getItem(STORAGE_KEY);
   const periods = data ? JSON.parse(data) : [];
-  console.dir(periods);
-  console.log(periods);
   return periods;
 }
 
