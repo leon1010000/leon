@@ -8,6 +8,7 @@ const APP_STATIC_RESOURCES = [
     "./icon.png",
 ];
 self.addEventListener("install", (event) => {
+  console.log("installed");
     event.waitUntil(
       (async () => {
         const cache = await caches.open(CACHE_NAME);
