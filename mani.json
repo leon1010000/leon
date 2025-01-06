@@ -2,7 +2,7 @@
     "name": "name",
     "short_name": "short",
     "description": "description",
-    "start_url": "./index.html",
+    "start_url": "/",
     "theme_color": "#0000ff",
     "background_color": "#00ff00",
     "display": "standalone",
