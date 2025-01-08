@@ -10,9 +10,9 @@ const APP_STATIC_RESOURCES = [
     "/mani.json"
 ];
 self.addEventListener("install", (event) => {
-  console.log("installed");
     event.waitUntil(
       (async () => {
+        console.log("install");
         const cache = await caches.open(CACHE_NAME);
         cache.addAll(APP_STATIC_RESOURCES);
       })(),
@@ -35,7 +35,7 @@ self.addEventListener("activate", (event) => {
 });
 // On fetch, intercept server requests
 // and respond with cached responses instead of going to network
-/*self.addEventListener("fetch", (event) => {
+self.addEventListener("fetch", (event) => {
     // As a single page app, direct app to always go to cached home page.
     if (event.request.mode === "navigate") {
       console.log("responded /");
@@ -58,4 +58,4 @@ self.addEventListener("activate", (event) => {
         return new Response(null, { status: 404 });
       })()
     );
-}); */
+});
