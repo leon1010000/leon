@@ -1,73 +1,39 @@
-const newPeriodFormEl = document.getElementsByTagName("form")[0];
-const startDateInputEl = document.getElementById("start-date");
-const endDateInputEl = document.getElementById("end-date");
-const pastPeriodContainer = document.getElementById("past-periods");
-if(newPeriodFormEl&&startDateInputEl&&endDateInputEl&&pastPeriodContainer)console.log("app.js succeeded");
-else console.log("app.js failed");
-// Add the storage key as an app-wide constant
-const STORAGE_KEY = "period-tracker";
+console.log("app.js succeeded");
+const canvas=document.createElement("canvas");
+document.body.appendChild(canvas);
+const ctx=canvas.getContext("2d");
+const CANVAS_WIDTH=600;canvas.width=CANVAS_WIDTH;
+const CANVAS_HEIGHT=600;canvas.height=CANVAS_HEIGHT;
+let mouseDown=()=>{};
+let draw=()=>{};
 
-// Listen to form submissions.
-newPeriodFormEl.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const startDate = startDateInputEl.value;
-  const endDate = endDateInputEl.value;
-  if (checkDatesInvalid(startDate, endDate)) {
-    return;
+let startPage={
+  circles:[]
+};
+const createStartPage=()=>{
+  startPage={
+    circles:[]
   }
-  storeNewPeriod(startDate, endDate);
-  renderPastPeriods();
-  newPeriodFormEl.reset();
-});
-
-function checkDatesInvalid(startDate, endDate) {
-  if (!startDate || !endDate || startDate > endDate) {
-    newPeriodFormEl.reset();
-    return true;
+  draw=()=>{
+    startPage.circles.forEach(v=>{
+      ctx.fillStyle="black";
+      ctx.fillRect(v.x-5,v.y-5,10,10);
+    })
   }
-  return false;
-}
-
-function storeNewPeriod(startDate, endDate) {
-  const periods = getAllStoredPeriods();
-  periods.push({ startDate, endDate });
-  periods.sort((a, b) => {
-    return new Date(b.startDate) - new Date(a.startDate);
-  });
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(periods));
-}
-
-function getAllStoredPeriods() {
-  const data = window.localStorage.getItem(STORAGE_KEY);
-  const periods = data ? JSON.parse(data) : [];
-  return periods;
-}
-
-function renderPastPeriods() {
-  const pastPeriodHeader = document.createElement("h2");
-  const pastPeriodList = document.createElement("ul");
-  const periods = getAllStoredPeriods();
-  if (periods.length === 0) {
-    return;
+  canvas.removeEventListener("mousedown",mouseDown);
+  mouseDown=ev=>{
+    console.log("mouseDown");
+    startPage.circles.push({x:ev.offsetX,y:ev.offsetY});
   }
-  pastPeriodContainer.textContent = "";
-  pastPeriodHeader.textContent = "Past periods";
-  periods.forEach((period) => {
-    const periodEl = document.createElement("li");
-    periodEl.textContent = `From ${formatDate(
-      period.startDate,
-    )} to ${formatDate(period.endDate)}`;
-    pastPeriodList.appendChild(periodEl);
-  });
-
-  pastPeriodContainer.appendChild(pastPeriodHeader);
-  pastPeriodContainer.appendChild(pastPeriodList);
+  canvas.addEventListener("mousedown",mouseDown);
 }
+createStartPage();
 
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", { timeZone: "UTC" });
-}
-
-renderPastPeriods();
- 
+const loop=()=>{
+  console.log("loop");
+  ctx.strokeStyle="black";
+  ctx.strokeRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
+  draw();
+  requestAnimationFrame(loop);
+};
+loop();

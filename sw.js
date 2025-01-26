@@ -42,7 +42,6 @@ self.addEventListener("fetch", (event) => {
       event.respondWith(caches.match("/")());
       return;
     }
-  
     // For all other requests, go to the cache first, and then the network.
     event.respondWith(
       (async () => {
